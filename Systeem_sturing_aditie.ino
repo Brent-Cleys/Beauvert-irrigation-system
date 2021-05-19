@@ -17,14 +17,12 @@ uint8_t wire4_moter2 = 15; //D8
 const uint16_t _delay = 5; /* delay in between two steps. minimum delay more the rotational speed */
 
 const long bak_delay = 50000;
-const long pomp_delay = 5000;
 
 const int pompPin =  16; //D0
 int VochtNood_weinig = 35;
 int VochtNood_veel = 55;
 int ventiel_1 = 0;
 int ventiel_2 = 0;
-int pomp_value = 0;
 
 
 int bak1 = 1;
