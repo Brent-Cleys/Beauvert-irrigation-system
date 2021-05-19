@@ -35,14 +35,8 @@ unsigned long bak1_millis;
 unsigned long bak2_millis;
 unsigned long bak3_millis;
 
-// Updates DHT readings every 10 seconds
-const long interval = 10000; 
-unsigned long previousMillis = 0;    // will store last time DHT was updated 
-// Variable to store if sending data was successful
-String success;
-
 //Structure example to send data
-//Must match the receiver structure
+//Must match the sender structure
 typedef struct struct_recievedata {
     int bak1;
     int bak2;
@@ -50,30 +44,9 @@ typedef struct struct_recievedata {
     int vochtigheid_waarde;
 } struct_struct_recievedata;
 
-// Create a struct_message called DHTReadings to hold sensor readings
 
-/*
-typedef struct struct_senddata {
-    int tank_waarde;
-    int voctigheid_waarde;
-    int batterij_waarde;
-} struct_senddata;
-
-struct_senddata send_data;
-*/
 struct_recievedata incomingReadings;
 
-/*
-void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
-  Serial.print("Last Packet Send Status: ");
-  if (sendStatus == 0){
-    Serial.println("Delivery success");
-  }
-  else{
-    Serial.println("Delivery fail");
-  }
-}
-*/
 
 void OnDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
   memcpy(&incomingReadings, incomingData, sizeof(incomingReadings));
@@ -273,20 +246,4 @@ void loop() {
 
       }
 
-
-    /*   
-    unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) {
-      // save the last time you updated the DHT values
-      previousMillis = currentMillis;
-
-      //Set values to send
-      send_data.tank_waarde = Niveau;
-      send_data.voctigheid_waarde = Vochtigheid*100;
-      send_data.batterij_waarde = 13;
-
-      // Send message via ESP-NOW
-      esp_now_send(broadcastAddress, (uint8_t *) &send_data, sizeof(send_data));
-  }
-  */
 }
