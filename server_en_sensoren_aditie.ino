@@ -8,10 +8,6 @@
 #include "Adafruit_seesaw.h"
 
 
-#define LED1 13
-#define LED2 12
-
-
 void send_sensor();
 void Sonar();
 void Soil();
@@ -47,8 +43,6 @@ long duration; // variable for the duration of sound wave travel
 float distance; // variable for the distance measurement
 int sensorPin = A0; 
 int sensorValue;  
-int VochtNood = 800; 
-int WaterTijd = 5000; 
 float Niveau;
 float tempC;
 uint16_t Moist;
@@ -56,16 +50,6 @@ int batterij_percentage;
 
 float batterij_metingwaarde[] = {0.025, 0.103, 0.248, 0.356, 0.365, 0.374, 0.488, 0.602, 0.720, 0.838, 0.846, 0.854, 0.862, 0.870, 1.970, 3.693, 4.742, 5.397, 6.112, 7.655, 9.146, 10.362, 10.894, 11.427, 12.433, 13.220, 13.729, 14.269, 15.354, 16.583, 17.368, 18.022, 19.159, 20.474, 20.989, 21.504, 22.165, 22.698, 23.493, 24.535, 25.879, 27.644, 29.407, 31.177, 32.227, 33.386, 34.440, 35.494, 38.871, 42.407, 45.042, 47.398, 50.375, 53.129, 54.744, 55.730, 56.969, 58.311, 59.274, 60.237, 61.713, 62.931, 64.453, 65.524, 65.936, 66.372, 66.521, 66.712, 68.054, 69.276, 69.597, 69.918, 70.479, 71.635, 72.894, 74.151, 75.402, 76.254, 77.004, 77.939, 78.510, 79.090, 79.518, 79.945, 80.761, 81.497, 82.260, 83.072, 83.839, 84.388, 84.684, 85.223, 86.200, 87.170, 87.637, 88.103, 88.809, 89.336, 89.221, 89.782, 90.055, 90.990, 92.021, 92.787, 93.469, 94.355, 94.840, 95.324, 96.131, 97.127, 98.018, 98.947};
 
-/*
-typedef struct struct_recievedata {
-    int tank_waarde;
-    int voctigheid_waarde;
-    int batterij_percentage;
-} struct_recievedata;
-
-struct_recievedata incomingReadings;
-
-*/
 
 typedef struct struct_senddata {
     int bak1;
@@ -380,11 +364,6 @@ function sendEmail(subj,email,message){
 </html>
 )=====";
 
-// ipaddress/led1/on
-//ipaddress/led1/off
-
-// ipaddress/led2/on
-//ipaddress/led2/off
 #include <ESPAsyncWebServer.h>
 
 AsyncWebServer server(80); // server port 80
@@ -406,20 +385,6 @@ void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
   }
 }
 
-/*
-void OnDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
-  memcpy(&incomingReadings, incomingData, sizeof(incomingReadings));
-  Serial.println("INCOMING READINGS");
-  Serial.print("tank_waarde: ");
-  Serial.println(incomingReadings.tank_waarde);
-  Serial.print("voctigheid_waarde: ");
-  Serial.println(incomingReadings.voctigheid_waarde);
-  Serial.print("batterij_percentage: ");
-  Serial.println(incomingReadings.batterij_percentage);
-  Serial.println();
-  
-}
-*/
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
 
@@ -527,27 +492,6 @@ void setup(void)
   // Register peer
   esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
 
-
-    
-  /*
-  // Set ESP-NOW Role
-  esp_now_set_self_role(ESP_NOW_ROLE_COMBO);
-  // Once ESPNow is successfully Init, we will register for Send CB to
-  // get the status of Trasnmitted packet
-  esp_now_register_send_cb(OnDataSent);
-  
-  // Register peer
-  esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_COMBO, 1, NULL, 0);
-
-  
-  // Register for a callback function that will be called when data is received
-  esp_now_register_recv_cb(OnDataRecv);
-  */
-
-  //WiFi.softAP("noteMCU", "");
-  //Serial.println("softap");
-  //Serial.println("");
-  //Serial.println(WiFi.softAPIP());
   WiFi.begin(ssid, password);
  
   while (WiFi.status() != WL_CONNECTED) {
